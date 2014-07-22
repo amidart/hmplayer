@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "Hamatata Player",
+  "version": "0.1.0",
+  "minimum_chrome_version": "20",
+
+  "icons": {
+    "128": ["img/128_green.png"],
+     "48": ["img/48_green.png"],
+     "19": ["img/19_green.png", "img/19_white.png", "img/19_gray.png"]
+  },
+
+  "background": {
+    "scripts": ["jquery-2.1.1.js", "background.js"]
+  },
+
+  "browser_action": {
+    "default_icon": "img/19_white.png",
+    "default_title": "Hamatata Player",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "webRequest",
+    "<all_urls>"
+  ]
+}
