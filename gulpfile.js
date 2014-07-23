@@ -6,17 +6,34 @@ var jshint = require('gulp-jshint')
     , changed = require('gulp-changed')
     , del = require('del')
     , print = require('gulp-print')
+    , concat = require('gulp-concat');
 
 console.timeEnd("Loading plugins");
 
 var paths = {
-  scripts: ['js/**/*'],
+  scripts: ['js/**/*', 'vendor/**/*.js'],
   images: 'img/**/*',
   firefox: 'build/firefox/',
   firefoxData: 'build/firefox/data/',
   chrome: 'build/chrome/'
 };
 
+// ==========================================
+
+function pipe(src, transforms, dest) {
+  if (typeof transforms === 'string') {
+    dest = transforms;
+    transforms = null;
+  }
+  var stream = gulp.src(src);
+  transforms && transforms.forEach(function(transform) {
+    stream = stream.pipe(transform);
+  })
+  if (dest) stream = stream.pipe(gulp.dest(dest));
+  return stream;
+}
+
+// ==========================================
 
 gulp.task('clean', function(cb) {
   del(['build'], cb);
@@ -41,17 +58,27 @@ gulp.task('images', function() {
 });
 
 
-gulp.task('scripts', function() {
+gulp.task('chrome', ['chrome-background'], function() {
+  pipe('vendor/chrome/manifest.json', paths.chrome);
+  pipe('libs/**/*', paths.chrome + 'libs/');
+});
 
+
+gulp.task('chrome-background', function() {
+  var scripts = ['js/main.js', 'vendor/chrome/browser.js'];
+  return gulp.src(scripts)
+    .pipe(concat('background.js'))
+    .pipe(gulp.dest(paths.chrome));
 });
 
 
 // default gulp task
-gulp.task('default', ['images', 'jshint', 'scripts'], function() {
+gulp.task('default', ['images', 'jshint', 'chrome'], function() {
 });
 
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['scripts']);
+  gulp.watch(paths.scripts, ['chrome']);
+  gulp.watch('vendor/chrome/manifest.json', ['chrome']);
   gulp.watch(paths.images, ['images']);
 });
