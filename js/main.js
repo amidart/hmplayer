@@ -5,6 +5,12 @@
   var name = 'Hamatata Player',
       version = '';
 
+
+  app.videoObserver = {
+    data: {}
+  };
+
+
   app.init = function() {
     version = app.browser.getExtensionVersion();
   };

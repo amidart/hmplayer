@@ -12,5 +12,7 @@
       var manifest = chrome.runtime.getManifest();
       return manifest.version;
     }
+
   };
+
 })(window);

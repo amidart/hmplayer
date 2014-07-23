@@ -58,9 +58,13 @@ gulp.task('images', function() {
 });
 
 
-gulp.task('chrome', ['chrome-background'], function() {
+// =================================== Chrome
+
+gulp.task('chrome', ['chrome-background', 'chrome-popup'], function() {
   pipe('vendor/chrome/manifest.json', paths.chrome);
   pipe('libs/**/*', paths.chrome + 'libs/');
+  pipe('html/*', paths.chrome + 'html/');
+  pipe('css/*', paths.chrome + 'css/');
 });
 
 
@@ -68,9 +72,17 @@ gulp.task('chrome-background', function() {
   var scripts = ['js/main.js', 'vendor/chrome/browser.js'];
   return gulp.src(scripts)
     .pipe(concat('background.js'))
-    .pipe(gulp.dest(paths.chrome));
+    .pipe(gulp.dest(paths.chrome + 'js/'));
 });
 
+gulp.task('chrome-popup', function() {
+  var scripts = ['vendor/chrome/browser-popup.js', 'js/popup.js'];
+  return gulp.src(scripts)
+    .pipe(concat('popup.js'))
+    .pipe(gulp.dest(paths.chrome + 'js/'));
+});
+
+// =========================================
 
 // default gulp task
 gulp.task('default', ['images', 'jshint', 'chrome'], function() {
