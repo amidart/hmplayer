@@ -1,6 +1,8 @@
 ;(function (window) {
   var popup = window.popup = window.popup || {};
 
+  var bg = chrome.extension.getBackgroundPage();
+
   popup.browser = {
 
     init: function() {
@@ -8,11 +10,18 @@
     },
 
     getData: function() {
-      var bg = chrome.extension.getBackgroundPage();
       if (bg.app) {
         return bg.app.videoObserver;
       }
       return {};
+    },
+
+    isAppEnabled: function() {
+      return bg.app.isEnabled();
+    },
+
+    toggleState: function() {
+      bg.app.toggleState();
     }
 
   }

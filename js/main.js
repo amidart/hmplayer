@@ -24,6 +24,10 @@
     return version;
   };
 
+  app.isEnabled = function() {
+    return state.enabled === true;
+  }
+
   app.toggleState = function() {
     state.enabled = !state.enabled;
     localStorage['enabled'] = state.enabled;
