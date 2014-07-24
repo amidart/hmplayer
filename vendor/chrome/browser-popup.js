@@ -1,15 +1,20 @@
 ;(function (window) {
   var popup = window.popup = window.popup || {};
 
-  popup.init = function() {
-    popup.show();
-  };
+  popup.browser = {
 
-  popup.getData = function() {
-    var bg = chrome.extension.getBackgroundPage();
-    if (bg) {
-        popup.data = bg.app.videoObserver.data;
+    init: function() {
+      popup.show();
+    },
+
+    getData: function() {
+      var bg = chrome.extension.getBackgroundPage();
+      if (bg.app) {
+        return bg.app.videoObserver;
+      }
+      return {};
     }
-  };
+
+  }
 
 })(window);

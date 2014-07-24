@@ -7,9 +7,9 @@
 
 
   app.videoObserver = {
+    dataType: '',
     data: {}
   };
-
 
   app.init = function() {
     version = app.browser.getExtensionVersion();

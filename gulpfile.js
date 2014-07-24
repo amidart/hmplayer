@@ -90,7 +90,6 @@ gulp.task('default', ['images', 'jshint', 'chrome'], function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch(paths.scripts, ['chrome']);
-  gulp.watch('vendor/chrome/manifest.json', ['chrome']);
+  gulp.watch(['js/**/*', 'vendor/**/*', 'html/*', 'css/*'], ['chrome']);
   gulp.watch(paths.images, ['images']);
 });
