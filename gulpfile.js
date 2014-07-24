@@ -69,7 +69,7 @@ gulp.task('chrome', ['chrome-background', 'chrome-popup'], function() {
 
 
 gulp.task('chrome-background', function() {
-  var scripts = ['js/main.js', 'vendor/chrome/browser.js'];
+  var scripts = ['js/main.js', 'vendor/chrome/browser.js', 'tests/background-test.js'];
   return gulp.src(scripts)
     .pipe(concat('background.js'))
     .pipe(gulp.dest(paths.chrome + 'js/'));
@@ -90,6 +90,6 @@ gulp.task('default', ['images', 'jshint', 'chrome'], function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch(['js/**/*', 'vendor/**/*', 'html/*', 'css/*'], ['chrome']);
+  gulp.watch(['js/**/*', 'vendor/**/*', 'html/*', 'css/*', 'tests/**/*'], ['chrome']);
   gulp.watch(paths.images, ['images']);
 });
