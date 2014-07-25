@@ -20,5 +20,7 @@ var App = (function (my) {
 
   };
 
+  return my;
+  
 })(App || {});
 

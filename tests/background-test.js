@@ -1,14 +1,14 @@
-;(function (window) {
-  var app = window.app = window.app || {};
+var App = (function (my) {
 
-  app.videoObserver.dataType = 'singleLink';
-  app.videoObserver.data = {
+
+  my.videoObserver.dataType = 'singleLink';
+  my.videoObserver.data = {
     'pageUrl': 'http://test.com/',
     'videoUrl': 'http://test.com/video.mp4',
     'videoType': 'mp4'
   }
 
 
+  return my;
 
-
-})(window);
+})(App || {});

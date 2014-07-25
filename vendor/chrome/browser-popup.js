@@ -10,18 +10,18 @@
     },
 
     getData: function() {
-      if (bg.app) {
-        return bg.app.videoObserver;
+      if (bg.App) {
+        return bg.App.videoObserver;
       }
       return {};
     },
 
     isAppEnabled: function() {
-      return bg.app.isEnabled();
+      return bg.App.isEnabled();
     },
 
     toggleState: function() {
-      bg.app.toggleState();
+      bg.App.toggleState();
     }
 
   }
