@@ -1,7 +1,6 @@
-;(function (window) {
-  var app = window.app = window.app || {};
+var App = (function (my) {
 
-  app.browser = {
+  my.browser = {
     name: 'Chrome',
 
     getUrl: function(url) {
@@ -21,4 +20,5 @@
 
   };
 
-})(window);
+})(App || {});
+

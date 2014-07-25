@@ -1,0 +1,13 @@
+{
+  "name": "hamatata-player",
+  "title": "Hamatata Player",
+  "id": "jid1-G7DZAiUzFo9tZg",
+  "description": "Hamatata Player",
+  "author": "(hamatata.com)",
+  "license": "MPL 2.0",
+  "version": "0.1.0",
+  "icon": "data/img/128_green.png",
+  "permissions": {
+    "cross-domain-content": ["http://export.yandex.ru", "http://translate.google.com", "http://api.urbandictionary.com", "http://glosbe.com", "https://api.lingualeo.com"]
+  }
+}

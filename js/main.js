@@ -1,6 +1,4 @@
-;(function (window) {
-
-  var app = window.app = window.app || {};
+var App = (function (my) {
 
   var name = 'Hamatata Player',
       version = '';
@@ -9,35 +7,32 @@
     enabled: false
   }
 
-  app.videoObserver = {
+  my.videoObserver = {
     dataType: '',
     data: {}
   };
 
-  app.init = function() {
-    version = app.browser.getExtensionVersion();
+  my.init = function() {
+    version = my.browser.getExtensionVersion();
     state.enabled = localStorage['enabled'] === undefined ? true : localStorage['enabled'] === 'true';
-    app.browser.setIcon(state.enabled);
+    my.browser.setIcon(state.enabled);
   };
 
-  app.getVersion = function() {
+  my.getVersion = function() {
     return version;
   };
 
-  app.isEnabled = function() {
+  my.isEnabled = function() {
     return state.enabled === true;
   }
 
-  app.toggleState = function() {
+  my.toggleState = function() {
     state.enabled = !state.enabled;
     localStorage['enabled'] = state.enabled;
-    app.browser.setIcon(state.enabled);
+    my.browser.setIcon(state.enabled);
   }
 
+  return my;
 
-})(window);
+})(App || {});
 
-
-window.addEventListener('load', function() {
-  app.init();
-});

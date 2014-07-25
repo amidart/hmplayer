@@ -6,7 +6,9 @@ var jshint = require('gulp-jshint')
     , changed = require('gulp-changed')
     , del = require('del')
     , print = require('gulp-print')
-    , concat = require('gulp-concat');
+    , concat = require('gulp-concat')
+    , shell    = require('gulp-shell')
+    ;
 
 console.timeEnd("Loading plugins");
 
@@ -58,7 +60,7 @@ gulp.task('images', function() {
 });
 
 
-// =================================== Chrome
+// ========================================= Chrome
 
 gulp.task('chrome', ['chrome-background', 'chrome-popup'], function() {
   pipe('vendor/chrome/manifest.json', paths.chrome);
@@ -69,7 +71,10 @@ gulp.task('chrome', ['chrome-background', 'chrome-popup'], function() {
 
 
 gulp.task('chrome-background', function() {
-  var scripts = ['js/main.js', 'vendor/chrome/browser.js', 'tests/background-test.js'];
+  var scripts = ['js/main.js',
+                 'vendor/chrome/browser.js',
+                 'vendor/chrome/background-init.js',
+                 'tests/background-test.js'];
   return gulp.src(scripts)
     .pipe(concat('background.js'))
     .pipe(gulp.dest(paths.chrome + 'js/'));
@@ -82,6 +87,30 @@ gulp.task('chrome-popup', function() {
     .pipe(gulp.dest(paths.chrome + 'js/'));
 });
 
+// ========================================= Firefox
+
+gulp.task('firefox', ['firefox-main', 'firefox-data'], function() {
+  pipe('vendor/firefox/package.json', paths.firefox);
+  pipe('libs/**/*', paths.firefoxData + 'libs/');
+  pipe('html/*', paths.firefoxData + 'html/');
+  pipe('css/*', paths.firefoxData + 'css/');
+});
+
+gulp.task('firefox-main', function() {
+    var scripts = ['js/main.js', 'vendor/firefox/browser.js'];
+    return gulp.src(scripts)
+      .pipe(concat('main.js'))
+      .pipe(gulp.dest(paths.firefox + 'lib/'));
+});
+
+gulp.task('firefox-data', function() {
+
+});
+
+gulp.task('firefox-run', shell.task([
+  'cd ./build/firefox && ../../tools/addon-sdk-1.16/bin/cfx run',
+]));
+
 // =========================================
 
 // default gulp task
@@ -90,6 +119,6 @@ gulp.task('default', ['images', 'jshint', 'chrome'], function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch(['js/**/*', 'vendor/**/*', 'html/*', 'css/*', 'tests/**/*'], ['chrome']);
+  gulp.watch(['js/**/*', 'vendor/**/*', 'html/*', 'css/*', 'tests/**/*'], ['chrome', 'firefox']);
   gulp.watch(paths.images, ['images']);
 });
